@@ -43,7 +43,7 @@ function Dashboard(props) {
           onThemeToggle={onThemeToggle}
         />
 
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <section className="grid w-full min-w-0 gap-4 md:grid-cols-2 xl:grid-cols-4">
           <SummaryCard
             title="Total Balance"
             value={formatCurrency(summary.totalBalance)}
@@ -62,14 +62,20 @@ function Dashboard(props) {
             tone="expense"
             detail="Current outgoing spending total"
           />
+          <SummaryCard
+            title="Total Transactions"
+            value={summary.totalTransactions}
+            tone="neutral"
+            detail="All income and expense entries currently tracked"
+          />
         </section>
 
-        <section className="grid gap-6 xl:grid-cols-[1.35fr_0.95fr]">
+        <section className="grid w-full min-w-0 gap-6 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,0.95fr)]">
           <DashboardCharts trendData={trendData} categoryData={categoryData} />
           <InsightsPanel insights={insights} />
         </section>
 
-        <section className="grid gap-6 xl:grid-cols-[1.5fr_0.9fr]">
+        <section className="grid w-full min-w-0 gap-6 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,0.9fr)]">
           <TransactionTable
             transactions={filteredTransactions}
             searchTerm={filters.searchTerm}

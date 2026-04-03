@@ -16,14 +16,14 @@ const PIE_COLORS = ["#16a34a", "#0ea5e9", "#f59e0b", "#dc2626", "#8b5cf6", "#14b
 
 function DashboardCharts({ trendData, categoryData }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
+    <div className="grid w-full min-w-0 gap-6 lg:grid-cols-2">
       <section className="glass-panel p-5">
         <div className="mb-4">
           <p className="section-title">Balance Trend</p>
           <p className="muted-copy mt-1">Running balance based on every recorded transaction.</p>
         </div>
 
-        <div className="h-72">
+        <div className="h-72 min-w-0">
           {trendData.length > 0 ? (
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={trendData}>
@@ -67,7 +67,7 @@ function DashboardCharts({ trendData, categoryData }) {
           <p className="muted-copy mt-1">Expense distribution by category.</p>
         </div>
 
-        <div className="h-72">
+        <div className="h-72 min-w-0">
           {categoryData.length > 0 ? (
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>

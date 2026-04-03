@@ -24,6 +24,7 @@ export const getSummary = (transactions) => {
     totalIncome: income,
     totalExpenses: expenses,
     totalBalance: income - expenses,
+    totalTransactions: transactions.length,
   };
 };
 

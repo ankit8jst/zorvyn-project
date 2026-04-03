@@ -2,6 +2,7 @@ const tones = {
   balance: "from-sky-500/20 to-cyan-500/5 text-sky-700 dark:text-sky-300",
   income: "from-emerald-500/20 to-lime-500/5 text-emerald-700 dark:text-emerald-300",
   expense: "from-rose-500/20 to-orange-500/5 text-rose-700 dark:text-rose-300",
+  neutral: "from-violet-500/20 to-indigo-500/5 text-violet-700 dark:text-violet-300",
 };
 
 function SummaryCard({ title, value, detail, tone }) {
