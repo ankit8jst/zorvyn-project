@@ -5,6 +5,25 @@ export const formatCurrency = (value) =>
     maximumFractionDigits: 0,
   }).format(value);
 
+export const getLocalDateInputValue = () => {
+  const now = new Date();
+  const timezoneOffset = now.getTimezoneOffset() * 60000;
+  return new Date(now.getTime() - timezoneOffset).toISOString().slice(0, 10);
+};
+
+export const formatMonthLabel = (value) =>
+  new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    year: "numeric",
+  }).format(new Date(`${value}-01`));
+
+const getPreviousMonthKey = (value) => {
+  const [year, month] = value.split("-").map(Number);
+  const previousMonth = new Date(year, month - 2, 1);
+  const paddedMonth = `${previousMonth.getMonth() + 1}`.padStart(2, "0");
+  return `${previousMonth.getFullYear()}-${paddedMonth}`;
+};
+
 export const formatDisplayDate = (value) =>
   new Intl.DateTimeFormat("en-US", {
     month: "short",
@@ -59,9 +78,21 @@ export const getCategoryBreakdown = (transactions) => {
 
 export const getInsights = (transactions) => {
   const expenses = transactions.filter((item) => item.type === "expense");
-  const currentMonth = new Date().toISOString().slice(0, 7);
+  const incomeTransactions = transactions.filter((item) => item.type === "income");
+  const latestTransactionMonth =
+    [...transactions]
+      .sort((a, b) => b.date.localeCompare(a.date))[0]
+      ?.date.slice(0, 7) || getLocalDateInputValue().slice(0, 7);
+  const previousTransactionMonth = getPreviousMonthKey(latestTransactionMonth);
+
   const monthlyExpenses = expenses
-    .filter((item) => item.date.startsWith(currentMonth))
+    .filter((item) => item.date.startsWith(latestTransactionMonth))
+    .reduce((sum, item) => sum + Number(item.amount), 0);
+  const currentMonthIncome = incomeTransactions
+    .filter((item) => item.date.startsWith(latestTransactionMonth))
+    .reduce((sum, item) => sum + Number(item.amount), 0);
+  const previousMonthIncome = incomeTransactions
+    .filter((item) => item.date.startsWith(previousTransactionMonth))
     .reduce((sum, item) => sum + Number(item.amount), 0);
   const categoryTotals = expenses.reduce((map, item) => {
     map[item.category] = (map[item.category] || 0) + Number(item.amount);
@@ -73,6 +104,23 @@ export const getInsights = (transactions) => {
     expenses.length > 0
       ? expenses.reduce((sum, item) => sum + Number(item.amount), 0) / expenses.length
       : 0;
+  const incomeChangePercent =
+    previousMonthIncome > 0
+      ? ((currentMonthIncome - previousMonthIncome) / previousMonthIncome) * 100
+      : currentMonthIncome > 0
+        ? 100
+        : 0;
+  const roundedIncomeChange = Math.round(Math.abs(incomeChangePercent));
+  const incomeTrendMessage =
+    previousMonthIncome === 0 && currentMonthIncome === 0
+      ? `No income recorded in ${formatMonthLabel(latestTransactionMonth)} yet`
+      : previousMonthIncome === 0
+        ? `Income started in ${formatMonthLabel(latestTransactionMonth)}`
+        : incomeChangePercent > 0
+          ? `Income increased by ${roundedIncomeChange}% this month`
+          : incomeChangePercent < 0
+            ? `Income decreased by ${roundedIncomeChange}% this month`
+            : "Income stayed flat this month";
 
   return {
     highestSpendingCategory: highestCategory,
@@ -80,6 +128,9 @@ export const getInsights = (transactions) => {
     monthlyExpenses,
     averageExpense,
     totalTransactions: transactions.length,
+    monthlyLabel: formatMonthLabel(latestTransactionMonth),
+    currentMonthIncome,
+    incomeTrendMessage,
   };
 };
 

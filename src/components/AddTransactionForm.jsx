@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { getLocalDateInputValue } from "../utils/finance";
 
 const initialForm = {
   amount: "",
   category: "",
   type: "expense",
-  date: new Date().toISOString().slice(0, 10),
+  date: getLocalDateInputValue(),
 };
 
 function AddTransactionForm({ onAddTransaction }) {
@@ -30,7 +31,7 @@ function AddTransactionForm({ onAddTransaction }) {
 
     setForm({
       ...initialForm,
-      date: new Date().toISOString().slice(0, 10),
+      date: getLocalDateInputValue(),
     });
   };
 

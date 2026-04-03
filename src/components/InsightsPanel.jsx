@@ -30,7 +30,7 @@ function InsightsPanel({ insights }) {
         <InsightCard
           label="Monthly Expenses"
           value={formatCurrency(insights.monthlyExpenses)}
-          helper="Based on expense transactions in the current month"
+          helper={`Based on expense transactions in ${insights.monthlyLabel}`}
           accent="text-amber-600 dark:text-amber-400"
         />
         <InsightCard
@@ -38,6 +38,12 @@ function InsightsPanel({ insights }) {
           value={formatCurrency(insights.averageExpense)}
           helper={`${insights.totalTransactions} total transactions tracked`}
           accent="text-sky-600 dark:text-sky-400"
+        />
+        <InsightCard
+          label="Income Trend"
+          value={formatCurrency(insights.currentMonthIncome)}
+          helper={insights.incomeTrendMessage}
+          accent="text-emerald-600 dark:text-emerald-400"
         />
       </div>
     </section>

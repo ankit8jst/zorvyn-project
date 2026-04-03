@@ -2,13 +2,17 @@ import { formatCurrency, formatDisplayDate } from "../utils/finance";
 
 function TransactionTable({
   transactions,
+  role,
   searchTerm,
   typeFilter,
   sortBy,
+  onDeleteTransaction,
   onSearchChange,
   onTypeFilterChange,
   onSortChange,
 }) {
+  const isAdmin = role === "admin";
+
   return (
     <section className="glass-panel p-5">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -76,6 +80,11 @@ function TransactionTable({
                   <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
                     Amount
                   </th>
+                  {isAdmin ? (
+                    <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                      Action
+                    </th>
+                  ) : null}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200 bg-white/70 dark:divide-slate-800 dark:bg-slate-950/50">
@@ -111,6 +120,17 @@ function TransactionTable({
                       {transaction.type === "income" ? "+" : "-"}
                       {formatCurrency(transaction.amount)}
                     </td>
+                    {isAdmin ? (
+                      <td className="whitespace-nowrap px-4 py-4 text-right">
+                        <button
+                          type="button"
+                          onClick={() => onDeleteTransaction(transaction.id)}
+                          className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700 transition hover:-translate-y-0.5 hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-300 dark:hover:bg-rose-500/20"
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    ) : null}
                   </tr>
                 ))}
               </tbody>

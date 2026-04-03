@@ -20,6 +20,7 @@ function Dashboard(props) {
     theme,
     filters,
     onAddTransaction,
+    onDeleteTransaction,
     onRoleChange,
     onThemeToggle,
     onSearchChange,
@@ -78,9 +79,11 @@ function Dashboard(props) {
         <section className="grid w-full min-w-0 gap-6 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,0.9fr)]">
           <TransactionTable
             transactions={filteredTransactions}
+            role={role}
             searchTerm={filters.searchTerm}
             typeFilter={filters.typeFilter}
             sortBy={filters.sortBy}
+            onDeleteTransaction={onDeleteTransaction}
             onSearchChange={onSearchChange}
             onTypeFilterChange={onTypeFilterChange}
             onSortChange={onSortChange}

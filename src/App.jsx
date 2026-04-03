@@ -63,6 +63,11 @@ function App() {
       onAddTransaction={(transaction) =>
         setTransactions((current) => [transaction, ...current])
       }
+      onDeleteTransaction={(transactionId) =>
+        setTransactions((current) =>
+          current.filter((transaction) => transaction.id !== transactionId),
+        )
+      }
       onRoleChange={setRole}
       onThemeToggle={() =>
         setTheme((current) => (current === "dark" ? "light" : "dark"))
