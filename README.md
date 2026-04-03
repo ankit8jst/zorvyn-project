@@ -2,6 +2,9 @@
 
 A responsive finance dashboard built with React, Tailwind CSS, Recharts, and browser `localStorage`.
 
+## 🌐 Live Demo
+https://zorvyn-project-szqo-ox7rlhxmm-ankit8jsts-projects.vercel.app/
+
 ## Run the project
 
 ```bash
