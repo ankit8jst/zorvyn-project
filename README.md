@@ -4,7 +4,7 @@ A responsive finance dashboard built with React, Tailwind CSS, Recharts, and bro
 
 ## 🌐 Live Demo
 
-[![Live Demo]([https://img.shields.io/badge/Live%20Demo-Click%20Here-blue?style=for-the-badge)](https://zorvyn-project-szqo-ox7rlhxmm-ankit8jsts-projects.vercel.app/](https://zorvyn-project-szqo.vercel.app/))
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Click%20Here-blue?style=for-the-badge)](https://zorvyn-project-szqo.vercel.app/)
 
 ## Run the project
 
